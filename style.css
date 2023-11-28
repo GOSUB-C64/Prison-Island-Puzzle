@@ -31,24 +31,24 @@ body{
     top: 70px;
 }
 
-.guesses .first,
-.guesses .second,
-.guesses .third,
-.guesses .fourth {
+.guesses #first,
+.guesses #second,
+.guesses #third,
+.guesses #fourth {
 
     list-style: none;
     float: left;
     width: 30px;
     height: 30px;
     border: 1px black solid;
-    margin: 0 10px 12px 0;
+    margin: 0 10px 18px 0;
     border-radius: 50%;
 }
 
 .buttons {
     position: absolute;
     left: 580px;
-    top: 500px;
+    top: 550px;
 }
 
 .buttons #but1,
@@ -63,4 +63,47 @@ body{
     border: 2px black solid;
     margin: 40px 10px 12px 0;
     border-radius: 50%;
+}
+
+/* .guessContainer {
+    position: relative;
+} */
+
+.guessIndicators {
+    position: relative;
+    left: 800px;
+    top: 90px;
+}
+
+.guessIndicators #i1, #i2, #i3, #i4{
+    height: 20px;
+    width: 20px;
+    border: 1px black solid;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.guessIndicators #i1{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.guessIndicators #i2{
+    position: absolute;
+    top: 0;
+    left: 22px;
+}
+
+.guessIndicators #i3{
+    position: absolute;
+    top: 22px;
+    left: 0;
+}
+
+.guessIndicators #i4{
+    position: absolute;
+    top: 22px;
+    left: 22px;
 }

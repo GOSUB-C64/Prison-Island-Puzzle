@@ -1,6 +1,19 @@
 // script to change colour of div using an array to cycle colours with an addEventListener
 
-const checkBtn = document.getElementById('check')
+let randomColourSequence = []
+generateRandomColourSequence()
+console.log('Actual array of Colours', randomColourSequence)
+
+// define the colour sequence array to guess//
+function generateRandomColourSequence() {
+	let colourMap = ['Green', 'Blue', 'Orange', 'Purple']
+	for (i = 0; i < 4; i++) {
+		//pick a random number between (0-3) and add it to the array
+		let pickedColour = Math.floor(Math.random() * 4)
+		randomColourSequence.push(colourMap[pickedColour])
+	}
+	return randomColourSequence
+}
 
 myColArr = ['white', 'Green', 'Blue', 'Orange', 'Purple']
 
@@ -16,6 +29,10 @@ let circle2_currentColour = 0
 let circle3_currentColour = 0
 let circle4_currentColour = 0
 
+const indicator1 = document.getElementById('i1')
+const indicator2 = document.getElementById('i2')
+const indicator3 = document.getElementById('i3')
+const indicator4 = document.getElementById('i4')
 
 // Add event listener to change the background color on a click
 circle1.addEventListener('click', function () {
@@ -64,7 +81,7 @@ circle3.addEventListener('click', function () {
 
 // Add event listener to change the background color on a click
 circle4.addEventListener('click', function () {
-	console.log("in the event listener")
+	console.log('in the event listener')
 	// Increment the current color index
 	circle4_currentColour++
 	console.log(circle4_currentColour)
@@ -77,31 +94,133 @@ circle4.addEventListener('click', function () {
 	circle4.style.backgroundColor = myColArr[circle4_currentColour]
 })
 
-// const row1 = document.getElementById('row1')
+const checkBtn = document.getElementById('check')
+var indexDiv = 0
+var rowNum = 1 // defined to make it easier to record the guesses by copying them into the next row!
+var currentRow
+var newColArr = [] // this will hold the guesses
 
-// checkBtn.addEventListener('click', checkAnswer)
+// take users guess and place it in the guess attempts list from bottom to top then check users' guessed colour combo against pre-chosen random colour sequence and ...
+// display if any were correct, almost correct or wrong.
+checkBtn.addEventListener('click', checkAnswer)
+function checkAnswer() {
+	// copy the current guess-indexes into a new array
+	const checkArr = [
+		circle1_currentColour,
+		circle2_currentColour,
+		circle3_currentColour,
+		circle4_currentColour,
+	]
 
-// function checkAnswer() {
-// 	const checkArr = [index1, index2, index3, index4]
-// 	console.log('Checked!')
-// 	console.log(checkArr)
-// }
+	// make a new array by iterating through checkArr and correspond each elements' value to the colArray so we have the names of the colours to compare later with the ...
+	// ACTUAL colour combo(array) to guess correctly
+	for (let i = 0; i < checkArr.length; i++) {
+		currentRow = document.getElementById(rowNum).getElementsByTagName('li')[
+			i
+		]
+		// new array!!
+		newColArr[i] = myColArr[checkArr[i]] // the magic is in this line!!
 
-// pick a random number between (0-3)
-// let pickedCol = Math.floor(Math.random() * 4)
+		currentRow.style.backgroundColor = newColArr[i]
+	}
+	circle1.style.backgroundColor = 'white'
+	circle2.style.backgroundColor = 'white'
+	circle3.style.backgroundColor = 'white'
+	circle4.style.backgroundColor = 'white'
 
-// console.log(generateColourSequenceArray);
+	// get next row ready to display next guess
+	rowNum++
 
-// // define what the colour sequence is //
-// function generateColourSequenceArray(arr) {
-// 	let nextColour;
-// 	let colourMap = ['Green', 'Blue', 'Orange', 'Purple'];
-// 	let i = 0;
-// 	let colArr = [];
-// 	while (colArr.length < 4) {
-// 		nextColour = arr[i];
-// 		colArr.push(colourMap[nextColour]);
-// 		i++;
-// 	}
-// 	return colArr;
-// }
+	console.log('Checked!')
+	console.log(checkArr)
+	console.log('newColArr =', newColArr)
+
+	// check key //
+	// green = correct colour guessed AND correct placing //
+	// yellow = correct colour BUT in the wrong place //
+	// red = wrong colour! //
+
+	// check user's guess with randomColourSequence //
+
+	// check circle1 guess with 1st Colour //
+	if (newColArr[0] === randomColourSequence[0]) {
+		console.log('green')
+		indicator1.style.backgroundColor ="green";
+
+		// if not true then check circle1 guess with 2nd Colour OR 3rd Colour OR 4th Colour //
+	} else if (
+		newColArr[0] === randomColourSequence[1] ||
+		newColArr[0] === randomColourSequence[2] ||
+		newColArr[0] === randomColourSequence[3]
+	) {
+		console.log('yellow')
+		indicator1.style.backgroundColor ="yellow";
+
+		// if still not true then its not in the array and doesn't exist!!
+	} else {
+		console.log('red')
+		indicator1.style.backgroundColor ="red";
+
+	}
+
+	// check circle2 guess with 2nd Colour //
+	if (newColArr[1] === randomColourSequence[1]) {
+		console.log('green')
+		indicator2.style.backgroundColor ="green";
+
+
+		// if not true then check circle2 guess with 1st Colour OR 3rd Colour OR 4th Colour //
+	} else if (
+		newColArr[1] === randomColourSequence[0] ||
+		newColArr[1] === randomColourSequence[2] ||
+		newColArr[1] === randomColourSequence[3]
+	) {
+		console.log('yellow')
+		indicator2.style.backgroundColor ="yellow";
+
+		// if still not true then its not in the array and doesn't exist!!
+	} else {
+		console.log('red')
+		indicator2.style.backgroundColor ="red";
+	}
+
+	// check circle3 guess with 3rd Colour //
+	if (newColArr[2] === randomColourSequence[2]) {
+		console.log('green')
+		indicator3.style.backgroundColor ="green";
+
+		// if not true then check circle3 guess with 1st Colour OR 2nd Colour OR 4th Colour //
+	} else if (
+		newColArr[2] === randomColourSequence[0] ||
+		newColArr[2] === randomColourSequence[1] ||
+		newColArr[1] === randomColourSequence[3]
+	) {
+		console.log('yellow')
+		indicator3.style.backgroundColor ="yellow";
+
+		// if still not true then its not in the array and doesn't exist!!
+	} else {
+		console.log('red')
+		indicator3.style.backgroundColor ="red";
+	}
+
+	// check circle4 guess with 4th Colour //
+	if (newColArr[3] === randomColourSequence[3]) {
+		console.log('green')
+		indicator4.style.backgroundColor ="green";
+
+
+		// if not true then check circle4 guess with 1st Colour OR 2nd Colour OR 3rd Colour //
+	} else if (
+		newColArr[3] === randomColourSequence[0] ||
+		newColArr[3] === randomColourSequence[1] ||
+		newColArr[1] === randomColourSequence[2]
+	) {
+		console.log('yellow')
+		indicator4.style.backgroundColor ="yellow";
+		// if still not true then its not in the array and doesn't exist!!
+	} else {
+		console.log('red')
+		indicator4.style.backgroundColor ="red";
+	}
+}
