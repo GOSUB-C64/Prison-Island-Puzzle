@@ -51,10 +51,10 @@ body{
     top: 500px;
 }
 
-.buttons .but1,
-.buttons .but2,
-.buttons .but3,
-.buttons .but4 {
+.buttons #but1,
+.buttons #but2,
+.buttons #but3,
+.buttons #but4 {
 
     float: left;
     text-align: center;
